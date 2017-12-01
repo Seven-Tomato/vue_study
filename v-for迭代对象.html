@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+    <!--
+       迭代对象:           v-for="value in object"                 只迭代对象的value值
+       第二个的参数为键名：v-for="(value, key) in object           迭代value和key值
+       第三个参数为索引：  v-for="(value, key, index) in object"   迭代value,key,index值
+        -->
+    
+    <div id="demo">
+       <ol>
+         <li v-for="(value, key, index) in object">
+         {{index}} | {{key}} | {{value}}
+         </li>
+       </ol>
+    </div>
+
+    <script type="text/javascript">
+        new Vue({
+              el:"#demo" ,
+              data:{
+                object:{
+                       name:"xiao ming",
+                       address:"abc",
+                       love:"tom"
+                }
+              }    
+      	})
+    </script>
+</body>
+</html>

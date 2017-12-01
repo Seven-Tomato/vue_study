@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>如果文本作为差值就用{{}}</title>
+	<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+      <!-- 模板 -->
+    <div id="demo">
+       {{message}}
+    </div>
+
+    <script type="text/javascript">
+      /*数据*/
+      	let obj={
+      		message:"文本差值{{双大括号}}"
+      	}
+
+      /*vm实例*/
+          var vm=new Vue({
+              el:"#demo",
+              data:obj,
+      	})
+    </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title></title>
+  <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+      <!-- 模板 -->
+    <div id="demo">
+       <input v-model="message">
+       {{message}}
+    </div>
+
+    <script type="text/javascript">
+      /*数据*/
+        let obj={
+         message:"小明"
+        }
+
+      /*vm实例*/
+          var vm=new Vue({
+              el:"#demo",
+              data:obj,
+        })
+    </script>
+</body>
+</html>

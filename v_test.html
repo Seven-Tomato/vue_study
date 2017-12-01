@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+      <!-- 模板 -->
+       <div id="demo">
+       <input type="text" v-model="message">
+       	<p v-on:click="click_fn">{{message}}</p><!-- 绑定事件监听器等价于@ -->
+       	<p :now_id="id"></p>
+       </div>
+
+
+
+       <script type="text/javascript">
+       /*数据*/
+    	let obj={
+    		message:"hello.Vue!",
+    		id:"123"
+    	}
+    	/*vm实例*/
+        var vm=new Vue({
+            el:"#demo",//挂载对象
+            data:obj,//代理数据
+            methods:{//事件
+               click_fn(){
+               	alert("click")
+               }
+            }
+    	})
+     console.log(vm.$data)
+    </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" type="text/css" href="css/select.css">
+     <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+  <div class="app">
+       <div  style="float: left;">
+          <!--v-bind动态绑定属性list  -->
+          <father-select ipt-value="搜素" v-bind:list="list1"></father-select>  
+       </div>
+
+
+      <div  style="float: right;">
+            <father-select ipt-value="编辑" v-bind:list="list2"></father-select>    
+      </div>  
+    
+
+  </div> 
+ <!-- 
+           组件实例作用域是独立的如果想从父组件-子组件传递数据用props
+           在自定义组件是上设置数据对应的属性名字,用props声明自定义属性明，
+           在自定义的组件模板上绑定属性名字 -->
+        
+      <script type="text/javascript"> 
+        //父组件
+          Vue.component("father-select",{
+                   data:function(){
+                      return {
+                         selected:false
+                      }
+                   },
+                   props:["iptValue","list"],/*props申明属性*/
+                   template:`<section class="select_wrap">
+                              <div class="search_select_wrap">       
+                                  <h3>select:</h3>
+                                   <input type="button"  
+                                   v-bind:value="iptValue"
+                                   v-on:click="selected=!selected"
+                                    />
+                                    <input type="text"/>
+                                   <children-select 
+                                   v-show="selected" 
+                                   v-bind:childrenList="list"
+                                   >
+                                   </children-select>
+                              </div>
+                         </section>` 
+              })
+          //子组件
+              Vue.component("children-select",{
+                       props:["childrenList"],
+                       template:` <ul class="dropdown_menu" >
+                                            <li><a href="#" v-for="item of childrenList">{{item}}</a></li>
+                                           
+                                   </ul>` 
+                  })
+
+/* 将获取来的data数据传入Vue根实例，
+   再将数据传入父组件,最后再传入子组件中,
+   父组件用props向根组件接受数据
+   子组件用props向父组件接受数据
+   
+   组件从上到下传数据,下一级都用props来接收
+*/
+         var data={
+             list1:["上海","北京","南京","台湾"],
+             list2:["星期一","星期二","星期三","星期四"]
+         }
+       
+
+           new Vue({
+                   el:".app",
+                   data:data
+                   
+                  })
+               
+      </script>
+</body>
+</html>

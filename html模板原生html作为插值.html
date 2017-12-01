@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>如果html作为差值就用v-html</title>
+	<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+      <!-- 模板 -->
+    <div id="demo">
+       <div v-html="htmltext"></div>
+    </div>
+
+    <script type="text/javascript">
+      /*数据*/
+      	let obj={
+      		htmltext:"<h1>html作为差值</h1></div>"
+      	}
+
+      /*vm实例*/
+          var vm=new Vue({
+              el:"#demo",
+              data:obj,
+      	})
+    </script>
+</body>
+</html>
+

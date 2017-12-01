@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>如果表达式作为插值就用v-bind</title>
+  <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+     <!-- 模板 -->
+    <div id="demo">
+       {{x>y?"yes":"no"}}<!-- 表达式只能加减乘除三目，不能是复杂的判断 -->
+    </div>
+
+    <script type="text/javascript">
+      /*数据*/
+        let obj={
+         x:10,
+         y:10
+        }
+
+      /*vm实例*/
+          var vm=new Vue({
+              el:"#demo",
+              data:obj,
+        })
+    </script>
+</body>
+</html>

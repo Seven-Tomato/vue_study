@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>引擎模板</title>
+  <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+    
+   <div id="demo">
+      <p>{{message}}</p>
+   </div>
+   <!-- 引擎模板 -->
+    <script type="x-template" id="temp">
+         <div>
+             hello vue
+             <span>{{message}}</span>
+         </div>
+    </script>
+
+    <script type="text/javascript">
+      /*数据*/
+        let obj={
+           message:"110"
+        }
+      /*vm实例*/
+        var vm=new Vue({
+              el:"#demo",
+              data:obj,
+              template:"#temp"
+        })
+    </script>
+</body>
+</html>

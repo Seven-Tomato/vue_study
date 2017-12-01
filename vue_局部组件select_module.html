@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue_selset局部组件</title>
+	<link rel="stylesheet" type="text/css" href="css/select.css">
+     <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+
+  <!--   Vue中的组件就是一个自定义标签，由Vue.js编译器为它添加上功能 -->
+ 
+     <div class="app">
+          <h3>自定义下拉框</h3>
+          <my-select></my-select>    
+     </div>
+
+     <div id="app" style="float: right;">
+         <h3>自定义下拉框</h3>
+          <my-select></my-select>    
+     </div>
+
+      <script type="text/javascript">
+         /*
+            1.在使用组件<my-select></my-select>前先注册组件
+            组件名命名约定：驼峰（CamelCase）或烤串（kebab-case） 
+            局部组件-在组件实例中通过选项对象注册，只在所注册的作用域中使用。
+            {
+                 conponents{
+                      组件名：选项对象
+                 }
+            }
+         */
+
+  //全局组件       
+          Vue.component("my-select",{
+                   template:`<section class="select_wrap">
+                              <div class="search_select_wrap">
+                                   <h3>select:</h3>
+                                   <ul class="dropdown_menu">
+                                        <li><a href="#">功能</a></li>
+                                        <li><a href="#">另一个功能</a></li>
+                                        <li><a href="#">其他</a></li>
+                                        <li class="divider"></li>
+                                        <li><a href="#">分离的链接</a></li>
+                                   </ul>
+                              </div>
+                         </section>` 
+              })
+
+//局部组件
+           new Vue({
+               el:".app",
+             /*  components:{  
+                   "my-select":{
+                        template:`<section class="select_wrap">
+                                      <div class="search_select_wrap">
+                                             <h3>select:</h3>
+                                             <ul class="dropdown_menu">
+                                                  <li><a href="#">功能</a></li>
+                                                  <li><a href="#">另一个功能</a></li>
+                                                  <li><a href="#">其他</a></li>
+                                                  <li class="divider"></li>
+                                                  <li><a href="#">分离的链接</a></li>
+                                             </ul>
+                                        </div>
+                                    </section>` 
+                                }
+                          }*/
+                  })
+
+           new Vue({
+               el:"#app"
+           })
+      </script>
+</body>
+</html>

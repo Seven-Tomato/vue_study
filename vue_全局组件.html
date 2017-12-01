@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body> 
+       <h4>
+       组件可以扩展 HTML 元素，封装可重用的代码。
+       组件系统让我们可以用独立可复用的小组件来构建大型应用，几乎任意类型的应用的界面都可以抽象为一个组件树：
+       </h4>
+       <img src="zujian.png">
+       <!-- 
+        注册一个全局组件语法格式如下：
+        Vue.component(tagName, options)
+        tagName 为组件名，options 为配置选项。
+        -->
+       <div id="app">
+       	   <my_conponent></my_conponent>
+       </div>
+
+       <script type="text/javascript">
+        //注册
+         Vue.component("my_conponent",{
+              template:`<h2>这是自定义的全局组件my_conponent</h2>`
+         })
+         // 创建根实例
+       	 new Vue({
+       	 	el:"#app"
+       	 })
+       </script>
+</body>
+</html>

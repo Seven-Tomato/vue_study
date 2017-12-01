@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+    
+    <div id="demo">
+        <div v-show="now">你看得见我吗！v-show</div>
+    </div>
+
+    <script type="text/javascript">
+    
+      /*vm实例*/
+          var vm=new Vue({
+              el:"#demo",
+              data:{
+                now:true
+              }
+      	})
+    </script>
+</body>
+</html>
