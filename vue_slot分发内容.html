@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body> 
+      
+   
+       <div id="app">
+          <h3>自定义组件</h3>
+       	  <custom></custom>
+       </div>
+
+       <script type="text/javascript">
+        /*
+          定制模板
+        */
+         Vue.component("custom",{
+         	template:`
+                     <div>
+			       	  	<p>第一条消息</p>
+			       	  	<p>第二条消息</p>
+			       	  	<p>第三条消息</p>
+			       	  	<p>第四条消息</p>
+			       	 </div> 
+         	         `,
+         })
+       	 new Vue({
+       	 	el:"#app"
+       	 })
+       </script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue单向数据流</title>
+	<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+     <div id="app">
+        <h2>父组件中使用counts</h2>
+        {{counts}}
+     	<costom-component v-bind:count="counts" v-on:receive="receiveCounts"></costom-component>
+
+     </div>
+     <!-- 
+         数据从父组件流向子组件，只能单向绑定，在子组件内不应该修改父组件传递过来的数据。
+         下面vue实例的date数据counts传到组件costom-component,下面在组件里改变顶层传来的
+         counts数据是不推荐的方法。
+         推荐用 1.component的data
+                2.计算属性computed    
+         下面creatCount就把传过来的count最为data的初始值，这样再去操作。
+      -->
+     <script type="text/javascript">
+      /* 注册组件（全局组件）*/ 
+       
+        Vue.component("costom-component",{
+        	    props:["count"],//接收组件自定义属性绑定的key值,value值是vue实例date的数据
+        	    data:function(){
+                     return {
+                     	 creatCount:this.count//creatCount作为局部这data的初始值
+                     }
+        	    },
+                template:`<div>
+                             <h2>这是一个自定义的组件</h2>
+                             <input type="button" value="改变count" 
+                               v-on:click="changeCount"/>
+                               {{creatCount}}
+                          </div>
+                         `,
+               methods:{
+               	    changeCount(){
+               	    	//this.count++;直接改不推荐
+               	    	this.creatCount++//把creatCount作为data的初始值再来改变
+               	    	this.$emit("receive");
+               	    }
+               }
+        })
+
+
+     	new Vue({
+     		el:"#app",
+     		data:{
+     			counts:0
+     		},
+     		methods:{
+	     			 receiveCounts(){
+	               	    	//alert("接收到数据")
+	               	    	this.counts++;
+	               	 }
+     		}
+
+     	})
+     </script>
+</body>
+</html>

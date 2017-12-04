@@ -24,7 +24,8 @@
           Vue.component("father-select",{
                    data:function(){
                       return {
-                         selected:false
+                         selected:false,
+                         val:"",//父级绑定
                       }
                    },
                    props:["iptValue","list"],/*props申明属性*/
@@ -35,14 +36,21 @@
                                    v-bind:value="iptValue"
                                    v-on:click="selected=!selected"
                                     />
-                                    <input type="text"/>
+                                    <input type="text" v-bind:value="val"/>
                                    <children-select 
-                                   v-show="selected" 
-                                   v-bind:childrenList="list"
+                                     v-show="selected" 
+                                     v-bind:childrenList="list"
+                                     v-on:receive="changeValue"
                                    >
                                    </children-select>
                               </div>
-                         </section>` 
+                         </section>` ,
+                     methods:{//父组件接收子组件消息的自定义事件
+                        changeValue(item_value){
+                         // alert(item_value)
+                         this.val=item_value;
+                        }
+                     }    
               })
           //子组件
               Vue.component("children-select",{
@@ -51,16 +59,26 @@
                                       <li>
                                          <a href="#" 
                                          v-for="item of childrenList"
-                                         v-on:click="selectValueHander()"
+                                         v-on:click="selectValueHander(item)"
                                          >
                                            {{item}}
                                          </a>
                                       </li>       
-                                   </ul>` 
-                  })
+                                   </ul>` ,
+                       methods:{//子组件绑定的事件
+                               selectValueHander:function(item){
+                                   //子组件点击，值到父组件的input里
+                                   //点击的时候，告诉父级改变val的值,用$emit向父级发射
+                                   //第一个参数是父级自定义的事件名,第二个参数是,发送的内容。
+                                   this.$emit("receive",item);
+
+                               }
+                       }            
+              })
 
 /* 
-   将li中的数据显示到input中去,数据从子组件到父组件
+   将li中的数据显示到input中去,数据从子组件到父组件,
+   父级用$on()自定义接受事件,子级用$emit()向上发射。    
 */
 
 

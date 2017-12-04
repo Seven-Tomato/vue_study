@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>vue单向数据流</title>
+	<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+     <div id="app">
+        <h2>父组件中使用counts</h2>
+        {{counts}}
+     	<costom-component v-bind:count="counts" v-on:receive="receiveCounts"></costom-component>
+
+     </div>
+     <!-- 
+        组件可以为props指定验证要求,如果未指定验证要求,vue会发出警告。
+        props{
+              propa: Number,
+              propb:[string,number],//多种类型。
+              propc:{type:string,required:true},//必须传,且为字符串。
+              propd:{type:Number,default:100},//字符串类型,默认值100。
+              propf:{type:Number,default:function(){//字定义默认条件。
+  
+              }},
+              prope:{
+                    validator:function(){}
+              }//自定义验证规则。
+
+        }
+      -->
+     <script type="text/javascript">
+      /* 注册组件（全局组件）*/ 
+       
+        Vue.component("costom-component",{
+        	    props:{//接收组件自定义属性绑定的key值,value值是vue实例date的数据
+                 count:{
+                       //type:Number,
+                       //default:10,
+                       //required:true,
+                       validator:function(value){
+                                 console.log(value)
+                       }
+                 }
+              },
+        	    data:function(){
+                     return {
+                     	 creatCount:this.count//creatCount作为局部这data的初始值
+                     }
+        	    },
+                template:`<div>
+                             <h2>这是一个自定义的组件</h2>
+                             <input type="button" value="改变count" 
+                               v-on:click="changeCount"/>
+                               {{creatCount}}
+                          </div>
+                         `,
+               methods:{
+               	    changeCount(){
+               	    	this.creatCount++
+               	    	this.$emit("receive");
+               	    }
+               }
+        })
+
+
+     	new Vue({
+     		el:"#app",
+     		data:{
+     			counts:0
+     		},
+     		methods:{
+	     			 receiveCounts(){
+	               	    	//alert("接收到数据")
+	               	    	this.counts++;
+	               	 }
+     		}
+
+     	})
+     </script>
+</body>
+</html>
