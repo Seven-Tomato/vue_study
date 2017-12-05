@@ -9,20 +9,35 @@
    
        <div id="app">
           <h3>自定义组件</h3>
-       	  <custom></custom>
+       	  <custom>
+       	    <!-- 写在自定义标签之间的内容，要混合子组件中的模板 -->
+       	  	 <div slot="one">我是标签中将要插到slot位置的模板1</div>
+       	  
+       	  	 <div slot="four">我是标签中将要插到slot位置的模板3</div>
+       	  	 <div slot="three">我是标签中将要插到slot位置的模板4</div>
+       	  	 <template slot="two">
+                      <div>我是标签中将要插到slot位置的模板2</div>
+                      <div>我是标签中将要插到slot位置的模板2</div>
+                      <div>我是标签中将要插到slot位置的模板2</div>
+                      <div>我是标签中将要插到slot位置的模板2</div>
+             </template>
+       	  </custom>
        </div>
-
        <script type="text/javascript">
         /*
-          定制模板
+          如果只是想template里传参可以用props,但是想要直接改变template的结构,
+          那么就用slot内容分发来定制模板
+          slot插槽会把定制的模板，插到template指定的位置。
+          如果具体要插在那个位置给slot一个name名,将要插入的内容对应具体的的name名。
+          如果有相同多个内容插入同一个位置,用template标签包含并加上slot名字
         */
          Vue.component("custom",{
          	template:`
-                     <div>
-			       	  	<p>第一条消息</p>
-			       	  	<p>第二条消息</p>
-			       	  	<p>第三条消息</p>
-			       	  	<p>第四条消息</p>
+                     <div> 
+                          <slot name="two"></slot>
+                          <slot name="one"></slot>
+                          <slot name="three"></slot>
+                          <slot name="four"></slot>
 			       	 </div> 
          	         `,
          })

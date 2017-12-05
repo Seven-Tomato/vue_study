@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body> 
+      
+   
+       <div id="app">
+          <h3>自定义组件</h3>
+       	  <custom>
+       	     {{message}}
+       	  </custom>
+       </div>
+       <script type="text/javascript">
+        /* 
+          appdiv里面的都是在父组件的作用域里，所以
+          自定义组件里面的message显示的是父组件的数据
+          父组件的内容在父组件作用域内编译，
+          子组件的内容在子组件作用月内编译
+        */
+         Vue.component("custom",{
+          data(){
+              return {
+                message:"我是子组件中的message"
+              }
+          },
+         	template:`
+                     <div> 
+                         <slot></slot>
+                         {{message}}
+			       	       </div> 
+         	         `,
+         })
+       	 new Vue({
+       	 	el:"#app",
+       	 	data:{
+       	 		message:"我是父组件中的message"
+       	 	}
+       	 })
+       </script>
+</body>
+</html>
