@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>递归组件封装树形菜单</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+     body,ul,li,h3{padding:0;margin:0;}
+     ul li{list-style: none}
+     .myTree-box{border:1px solid #000;width: 400px;padding:15px 25px;box-sizing:border-box;}
+	</style>
+	  <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+     <div id="app">
+      <my-tree v-bind:treelist="list"></my-tree>
+     </div>      
+
+
+
+     <script type="text/javascript" >
+      var lists=[{
+           title:"目录",
+           children:[{
+                      title:"我的音乐",
+                      children:[{
+                                title:"周杰伦",
+                                children:[{
+                                           title:"东风破"
+                                          }]
+                                },
+                                {
+                                  title:"罗大佑",
+                                  children:[{
+                                            title:"光影的故事"
+                                           }]
+                                }]
+                      }]
+                  }]
+   
+
+/*定义组件*/
+      Vue.component("myTree",{
+            props:{
+                 treelist:{
+                          type:Array,
+                          default:[]
+                 }  
+            },
+            template:`
+                   <div class="myTree-box">
+                      <my-child-tree v-bind:data="treelist"></my-child-tree>
+                   <div>
+                    `,
+      })
+/*
+  把循环相同的dom ulli 提出来封装成组件
+  再用递归组件的方式把所有的数据循环出来
+  下面的就是那属性里的方法是：
+  nowcounts每调用一次myChildTree自身组件就记一次数字,
+  paddingleft设置每次调用后titlt的left值
+  v-bind绑定对个对象/或者class用[]
+*/ 
+      Vue.component("myChildTree",{
+              
+                props:{
+                       data:{
+                           type:Array,
+                           default:[]
+                       },
+                       counts:{
+                           type:Number,
+                           default:0
+                       }        
+                 }, 
+                 computed:{
+                       nowcounts(){
+                           //counts是调用后拿到的值相当是父组件的所以这里不能直接用，用num来
+                           //接收
+                            var num=this.counts;
+                            return ++num;
+                       },
+                       paddingleft(){
+                          return {
+                               "padding-left":this.nowcounts*16+"px"
+                          }
+                       }
+                 }, 
+                template:` 
+                       <ul>
+                          <li v-for="item of data">
+                               <h3 v-bind:style="[paddingleft]">{{item.title}}</h3>
+                               <!--如果循环的item有children那么就要循环下一层-->
+                              <my-child-tree 
+                                   v-if="item.children" 
+                                   v-bind:data="item.children"
+                                   v-bind:counts="nowcounts"
+                                   >
+                              </my-child-tree>
+                          </li>
+                       </ul
+                         `,
+      })
+
+/*启动Vue*/
+     	new Vue({
+     		el:"#app",
+        data:{
+          list:lists
+        }
+     	})
+     </script>
+</body>
+</html>

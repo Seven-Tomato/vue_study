@@ -42,7 +42,13 @@
        .m-alert-error{
         background-color: #ff4949;
        }
- /*提示图标不同class*/     
+ /*提示图标不同class*/
+        .m-icon{font-size: 16px;
+                display: table-cell;
+                color: #fff;
+                vertical-align: middle;
+                width: 16px
+        }     
         .alert-info:before {
           content: "\e902";
         }
@@ -75,10 +81,35 @@
 	  <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
 </head>
 <body>
-
+      <!-- 
+      v-bind:closeable="false" 
+      这样是动态绑定closeable才等于布尔值false
+      closeable="false" 
+      这样closeable=字符串false
+      -->
      <div id="app">
-     	       <my-alert type="error"  title="错误！请重写！"></my-alert>
-             <my-alert type="success"  title="成功！恭喜！"></my-alert>
+     	      
+             <my-alert type="success"  title="成功！恭喜！"  v-bind:closeable="false"></my-alert>
+             <my-alert type="info"  title="消息提醒！" ></my-alert>
+             <my-alert type="warning"  
+                       title="警告！请重写！" 
+                       :showicon="true"
+                       style="background-color: pink"
+                       >
+                         
+             </my-alert>
+
+
+             <my-alert type="error"  title="错误！请重写！" v-on:close-click="closeclick" >
+                  <template slot="titleTmp">
+                       <p>错误！请重写！</p>
+                       <p>错误！请重写！</p>
+                       <p>错误！请重写！</p>
+                       <p>错误！请重写！</p>
+                       <p>错误！请重写！</p>
+                  </template>
+             </my-alert>
+
      <script type="text/javascript" >
      	/*    
             alert提醒框有四种状态:
@@ -88,7 +119,7 @@
                  type  提醒框类型 默认info
                  title 提示信息 "这里是消息提示"
                  closeable 是否禁用关闭 默认为true
-                 showIcon 是否显示图标 默认为false
+                 showicon 是否显示图标 默认为false
                  style 设置提示样式框 默认为{}
             订制模板:
                  slot 为iconTmp 定制icon模板
@@ -106,7 +137,16 @@
                title:{
                     type:String,
                     default:"这里是消息提示"
-               }
+               },
+                closeable:{
+                    type:Boolean,
+                    default:true
+                },
+                showicon:{
+                    type:Boolean,
+                    defalut:false
+                },
+                style:String
             },
             computed:{
                     classed:function(){
@@ -119,18 +159,33 @@
                     }   
             },
             template:`
-                <div class="m-alert" v-bind:class="[classed]">
-                    <i class="m-icon" v-bind:class="[iconclassed]"></i> 
+                <div class="m-alert" v-bind:class="[classed]" style="style">
+                    <i v-if="showicon" class="m-icon" v-bind:class="[iconclassed]"></i> 
                        <div class="m-content">
-                           <span class="m-message">{{title}}</span>
-                           <i class="m-closebtn alert-cancel"></i>
+                           <slot name="titleTmp">
+                               <span class="m-message">{{title}}</span>
+                           </slot>
+                           <i v-if="closeable" 
+                              class="m-closebtn alert-cancel" 
+                              v-on:click="closehander">
+                           </i>
                        </div> 
                     </div>
                  </div>
                 `,
+            methods:{
+              closehander(){
+                  this.$emit("close-click")
+              }
+            }    
       })
      	new Vue({
      		el:"#app",
+        methods:{
+          closeclick(){
+            alert("关闭按钮被触发了！")
+          }
+        }
      	})
 
 

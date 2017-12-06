@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	 <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+     <div id="app">
+     	<button v-on:click="currentcustom(1)">显示第一个组件</button>
+     	<button v-on:click="currentcustom(2)">显示第二个组件</button>
+     	<button v-on:click="currentcustom(3)">显示第三个组件</button>
+     	<keep-alive>
+     	  <component v-bind:is="current"></component>
+     	</keep-alive>
+     </div>
+     <script type="text/javascript">
+        var custom1=Vue.component("custom1",{
+			             template:`
+			                       <h3 v-on:click="changbgc">我是第一个组件</h3>
+			                      `,
+			              methods:{
+                                  changbgc(ev){
+                                      ev.target.style.backgroundColor="red";
+                                  }
+			              }        
+                     })
+        var custom2=Vue.component("custom2",{
+			        	 template:`
+			                       <h3>我是第二个组件</h3>
+			                      `
+                     })
+        var custom3=Vue.component("custom3",{
+			        	 template:`
+			                      <h3>我是第三个组件</h3>
+			                      `
+                     })
+   
+/*
+     点击按钮切换组件
+     Vue.component()有返回值,用变量记录。
+     点击组件一的时候为它设置了bgc red
+     当点击按钮切换后，在切到组件一上此时组件一的bgc没有了
+     为了保留组件一的状态，这里可以使用<keep-live></keep-live>来保留组件一的状态,
+     將组件一放到<keep-alive>
+                      <component v-bind:is="current"></component>
+                 </keep-alive>
+*/
+     	new Vue({
+     		el:"#app",
+     		data:{
+                 current:custom1//当前组件为custom1
+     		},
+     		methods:{
+     			currentcustom(index){
+                     switch (index){
+                             case 1:
+                             this.current=custom1
+                             break;
+                             case 2:
+                             this.current=custom2
+                             break;
+                             default:
+                             this.current=custom3
+                     }
+     			}
+     		}
+     	})
+     </script>
+</body>
+</html>

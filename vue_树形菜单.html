@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>树形菜单</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+     .myTree-box{border:1px solid #000;width: 400px;}
+	</style>
+	  <script src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+     <div id="app">
+      <my-tree v-bind:treelist="list"></my-tree>
+     </div>      
+
+
+
+     <script type="text/javascript" >
+      var lists=[{
+           title:"目录",
+           children:[{
+                      title:"我的音乐",
+                      children:[{
+                                title:"周杰伦",
+                                children:[{
+                                           title:"东风破"
+                                          }]
+                                },
+                                {
+                                  title:"罗大佑",
+                                  children:[{
+                                            title:"光影的故事"
+                                           }]
+                                }]
+                      }]
+                  }]
+    
+/*定义组件*/
+      Vue.component("myTree",{
+            props:{
+                 treelist:{
+                          type:Array,
+                          default:[]
+                 }  
+            },
+            template:`
+                   <div class="myTree-box">
+                       <ul>
+                          <li v-for="item of treelist">
+                               <h3>{{item.title}}</h3>
+                               <!--如果循环的item有children那么就要循环下一层-->
+                               <ul v-if="item.children">
+                                     <li v-for="item2 of item.children">
+                                           <h3>{{item2.title}}</h3>
+                                            <!--如果循环的item2有children那么就要循环下一层-->
+                                             <ul v-if="item2.children">
+                                                   <li v-for="item3 of item2.children">
+                                                       <h3>{{item3.title}}</h3>
+                                                      <!--如果循环的item2有children那么就要循环下一层-->
+                                                         <ul v-if="item3.children">
+                                                               <li v-for="item4 of item3.children">
+                                                                   <h3>{{item4.title}}</h3>
+                                                               </li>
+                                                         <ul/>
+                                                   </li>
+                                             <ul/>   
+                                     </li>
+                               <ul/>
+                          </li>
+                       </ul>
+                   <div>
+
+
+
+                    `,
+      })
+/*启动Vue*/
+     	new Vue({
+     		el:"#app",
+        data:{
+          list:lists
+        }
+     	})
+
+
+    
+
+
+
+
+
+
+
+
+
+
+     </script>
+</body>
+</html>
